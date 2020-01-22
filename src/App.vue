@@ -174,9 +174,9 @@
 		data () {
 			return {
 				api: {
-					all: 'http://127.0.0.1:8000/vacancies/api/allVacancies/',
-					cites: 'http://127.0.0.1:8000/vacancies/api/cityVacancies/',
-					themes: 'http://127.0.0.1:8000/vacancies/api/themeVacancies/'
+					all: '/vacancies/api/allVacancies/',
+					cites: '/vacancies/api/cityVacancies/',
+					themes: '/vacancies/api/themeVacancies/'
 				},
 				data: [],
 				cites: [],
@@ -233,10 +233,9 @@
 					this.pages.prev = response.data.previous;
 					this.pages.next = response.data.next;
 				})
-				.catch(error => {
-					console.log(error);
-					this.errored = true;
-				})
+				// .catch(error => {
+				// 	this.errored = true;
+				// })
 				.finally(() => (this.loading = false));
 			},
 			nextPage () {
@@ -288,10 +287,9 @@
 				this.pages.prev = response.data.previous;
 				this.pages.next = response.data.next;
 			})
-			.catch(error => {
-				console.log(error);
-				this.errored = true;
-			})
+			// .catch(error => {
+			// 	this.errored = true;
+			// })
 			.finally(() => (this.loading = false));
 
 			// Список городов для вакансий
@@ -305,10 +303,9 @@
 			.then((response) => {
 				this.cites = response.data;
 			})
-			.catch(error => {
-				console.log(error);
-				this.errored = true;
-			})
+			// .catch(error => {
+			// 	this.errored = true;
+			// })
 			.finally(() => (this.loading = false));
 
 			// Список направлений для вакансий
@@ -322,10 +319,9 @@
 			.then((response) => {
 				this.themes = response.data;
 			})
-			.catch(error => {
-				console.log(error);
-				this.errored = true;
-			})
+			// .catch(error => {
+			// 	this.errored = true;
+			// })
 			.finally(() => (this.loading = false));
 		}
 	}
