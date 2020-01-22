@@ -31,7 +31,8 @@
 									</div>
 								</div>
 								<p class="front-job__date">
-									12 января 2019
+									<!-- 12 января 2019 -->
+									{{$moment('2019-11-26T02:49:34.589894+02:00').format('D.M.YYYY')}}
 								</p>
 								<p class="front-job__title">
 									{{ item.title }}
@@ -133,20 +134,20 @@
 		<a href="" class="pagination__arrow pagination__arrow--prev" v-on:click.prevent="prevPage" v-bind:class="{ 'pagination__arrow--disabled': !pages.prev}">
 			Назад
 		</a>
-		<a href="" class="pagination__link" v-for="(item, index) in pages.pageAll" v-bind:key="item.id" v-bind:class="{ 'pagination__link--now': index + 1 ==  pages.pageNow}">
+		<a href="" class="pagination__link" v-on:click.prevent="pages.pageNow = index+1" v-for="(item, index) in pages.pageAll" v-bind:key="item.id" v-bind:class="{ 'pagination__link--now': index + 1 ==  pages.pageNow}">
 			{{ index + 1}}
 		</a>
 		<a href="" class="pagination__arrow pagination__arrow--next" v-on:click.prevent="nextPage" v-bind:class="{ 'pagination__arrow--disabled': !pages.next}">
 			Вперед
 		</a>
 	</div>
-	<div>
+<!-- 	<div>
 		Выбрано: <br>
 		Направление: {{ selectedTheme }} <br>
 		Расписание: {{ selectedShedule }} <br>
 		Город: {{ selectedCity }} <br>
 		Страницы: {{ pages.pageNow }}
-	</div>
+	</div> -->
 	<div class="to-top-block">
 		<div class="to-top">
 			<svg viewBox="0 0 24 20" xmlns="http://www.w3.org/2000/svg">
@@ -164,6 +165,10 @@
 </template>
 
 <script>
+	import Vue from 'vue';
+	import moment from 'moment';
+	Vue.prototype.$moment = moment;
+
 	export default {
 		name: 'app',
 		data () {
@@ -237,13 +242,11 @@
 			nextPage () {
 				if (this.pages.pageNow < this.pages.pageAll) {
 					this.pages.pageNow = this.pages.pageNow + 1;
-					this.updateList();
 				}
 			},
 			prevPage () {
 				if (1 < this.pages.pageNow < this.pages.pageAll) {
 					this.pages.pageNow = this.pages.pageNow - 1;
-					this.updateList();
 				}
 			}
 		},
@@ -257,8 +260,13 @@
 			selectedTheme: function() {
 				this.updateList();
 			},
-			pageNow: function () {
-				console.log('Изменили счетчик');
+			actuallyPage: function () {
+				this.updateList();
+			}
+		},
+		computed: {
+			actuallyPage() {
+				return this.pages.pageNow;
 			}
 		},
 		mounted() {
