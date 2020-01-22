@@ -222,7 +222,7 @@
 						city: this.selectedCity,
 						shedule: this.selectedShedule,
 						theme: this.selectedTheme,
-						limit: 1,
+						limit: 18,
 						offset: this.pages.pageNow - 1
 					}
 				})
@@ -274,7 +274,7 @@
 			this.$http.get(this.api.all, {
 				params: {
 					format: 'json',
-					limit: 1,
+					limit: 18,
 					offset: this.pages.pageNow - 1
 					// city: 1,
 					// shedule: '',
