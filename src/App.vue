@@ -153,12 +153,12 @@
 	</div>
 </div>
 <div>
-		Направление: {{ selectedTheme }} <br>
+		<!-- Направление: {{ selectedTheme }} <br>
 		Расписание: {{ selectedShedule }} <br>
 		Город: {{ selectedCity }} <br>
 		Страницы: {{ pages.pageNow }} <br>
 		Следующая: {{ pages.next }} <br>
-		Предыдущая: {{ pages.prev }} <br>
+		Предыдущая: {{ pages.prev }} <br> -->
 	</div>
 </div>
 </section>
