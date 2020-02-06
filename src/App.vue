@@ -141,13 +141,6 @@
 			Вперед
 		</a>
 	</div>
-<!-- 	<div>
-		Выбрано: <br>
-		Направление: {{ selectedTheme }} <br>
-		Расписание: {{ selectedShedule }} <br>
-		Город: {{ selectedCity }} <br>
-		Страницы: {{ pages.pageNow }}
-	</div> -->
 	<div class="to-top-block">
 		<div class="to-top">
 			<svg viewBox="0 0 24 20" xmlns="http://www.w3.org/2000/svg">
@@ -159,6 +152,14 @@
 		</div>
 	</div>
 </div>
+<div>
+		Направление: {{ selectedTheme }} <br>
+		Расписание: {{ selectedShedule }} <br>
+		Город: {{ selectedCity }} <br>
+		Страницы: {{ pages.pageNow }} <br>
+		Следующая: {{ pages.next }} <br>
+		Предыдущая: {{ pages.prev }} <br>
+	</div>
 </div>
 </section>
 </div>
@@ -173,6 +174,11 @@
 		name: 'app',
 		data () {
 			return {
+				// api: {
+				// 	all: 'http://127.0.0.1:8000/vacancies/api/allVacancies/',
+				// 	cites: 'http://127.0.0.1:8000/vacancies/api/cityVacancies/',
+				// 	themes: 'http://127.0.0.1:8000/vacancies/api/themeVacancies/'
+				// },
 				api: {
 					all: '/vacancies/api/allVacancies/',
 					cites: '/vacancies/api/cityVacancies/',
@@ -207,8 +213,9 @@
 				pages: {
 					pageNow: 1,
 					pageAll: 4,
-					prev: '',
-					next: ''
+					limit: 1,
+					prev: null,
+					next: null
 				},
 				loading: false
 			}
@@ -222,14 +229,13 @@
 						city: this.selectedCity,
 						shedule: this.selectedShedule,
 						theme: this.selectedTheme,
-						limit: 18,
+						limit: this.pages.limit,
 						offset: this.pages.pageNow - 1
 					}
 				})
 				.then((response) => {
 					this.data = response.data;
 					this.pages.pageAll = response.data.count;
-					// this.pages.pageNow = 1;
 					this.pages.prev = response.data.previous;
 					this.pages.next = response.data.next;
 				})
@@ -251,12 +257,15 @@
 		},
 		watch: {
 			selectedCity: function() {
+				this.pages.pageNow = 1;
 				this.updateList();
 			},
 			selectedShedule: function() {
+				this.pages.pageNow = 1;
 				this.updateList();
 			},
 			selectedTheme: function() {
+				this.pages.pageNow = 1;
 				this.updateList();
 			},
 			actuallyPage: function () {
@@ -274,7 +283,7 @@
 			this.$http.get(this.api.all, {
 				params: {
 					format: 'json',
-					limit: 18,
+					limit: this.pages.limit,
 					offset: this.pages.pageNow - 1
 					// city: 1,
 					// shedule: '',
